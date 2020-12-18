@@ -10,8 +10,6 @@
 
   ![Snipaste_2020-08-31_11-26-44](figures/Snipaste_2020-08-31_11-26-44.png)
 
-  
-
 - 点击 Actions 创建工作流
 
 ![Snipaste_2020-08-31_11-31-00](figures/Snipaste_2020-08-31_11-31-00.png)
@@ -28,13 +26,9 @@
 
   ![Snipaste_2020-08-31_11-38-09](figures/Snipaste_2020-08-31_11-38-09.png)
 
-
-
 - 查看工作流的具体信息，点击一个工作流，`rt-thread club automatic check-in` 为例：
 
   ![Snipaste_2020-08-31_11-39-29](figures/Snipaste_2020-08-31_11-39-29.png)
-
-  
 
 - 点击 build，点击右边的小箭头就可以查看运行信息，可以看到已经成功签到。
 
@@ -46,3 +40,67 @@
 
 ![Snipaste_2020-08-31_11-46-43](figures/Snipaste_2020-08-31_11-46-43.png)
 
+### 邮件
+
+### 开通邮件服务
+
+- 没有 163 邮箱的请注册 163 邮箱账号，我们将使用 网易 163 邮件的[免费发送服务](http://help.163.com/09/1223/14/5R7P3QI100753VB8.html)。
+
+- 打开 163 邮箱，点击设置，开启 IMAP 服务，新增授权密码，保存好授权密码。
+
+  ![163](figures/163.png)
+
+- 打开仓库，添加邮箱 secrets:
+
+  ![email](figures/email.png)
+
+- 邮件服务就开通完毕了，每天 CI 运行完毕，会发送邮件到你的邮箱，会显示签到天数，以及附件今日排行榜。
+
+  ![paihang](figures/paihang.png)
+
+### 关闭邮件服务
+
+打开 actions.yml 文件，删除下面代码：
+
+```c
+    - name: Send email
+      uses: dawidd6/action-send-mail@master
+      with:
+        server_address: smtp.163.com
+        server_port: 465
+        username: ${{ secrets.MAIL_USERNAME }}
+        password: ${{ secrets.EMAIL_PASSWORD }}
+        subject: 签到小助手提醒您 (${{env.REPORT_DATE}})
+        body: ${{env.CLUB_DAY_NUMERS}}
+        to: ${{ secrets.TEST_EMAIL }}
+        from: GitHub Actions
+        content_type: text/html
+        attachments: /home/runner/paihang.png
+```
+
+## Travis CI
+
+添加 Travis CI 定时任务，防止 Github 服务器抽风忘记签到。
+
+- **fork** 最新的仓库；
+
+- 打开 **Travis CI** 工作流：
+
+  ![travis_ci](figures/travis_ci.jpg)
+
+- 查看 **build** 信息，点击 **The build**：
+
+  ![travis_ci_build](figures/travis_ci_build.jpg)
+
+- 点击 setting ，添加环境变量：
+
+  ![travis_setting](figures/travis_setting.jpg)
+
+- 添加环境变量和定时任务：
+
+  ![travis_ci_env](figures/travis_ci_env.jpg)
+  
+
+## Star 趋势
+
+[![Stargazers over time](https://starchart.cc/thread-liu/rt-thread-club.svg)](https://starchart.cc/thread-liu/rt-thread-club.svg)
