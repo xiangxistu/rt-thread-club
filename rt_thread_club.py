@@ -57,6 +57,8 @@ def login_in_club(user_name, pass_word):
                 element.click()
                 logging.info("check in success!")
         else:
+            logging.info("driver.current_url : {0}".format(driver.current_url))
+            driver.get_screenshot_as_file("/home/runner/paihang.png")
             continue
 
         time.sleep(1)
