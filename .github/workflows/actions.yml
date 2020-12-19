@@ -44,6 +44,9 @@ jobs:
       env:
         PRIVATE_REPORT_DATE: $(TZ=':Asia/Shanghai' date '+%Y-%m-%d %T')
     - name: Send email
+      run: |
+        echo ${{env.PRIVATE_REPORT_DATE}}
+        echo ${{env.PRIVATE_DAY_INFO}}
       uses: dawidd6/action-send-mail@master
       with:
         server_address: smtp.qq.com
