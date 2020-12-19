@@ -33,16 +33,16 @@ jobs:
     - name: Sign In
       run: |
         python actions.py
-        echo ${{env.PRIVATE_DAY_INFO}}
+        echo $(cat sign_in_days.txt) >> PRIVATE_DAY_INFO
       env:
         CLUB_USERNAME: ${{ secrets.USERNAME }}
         CLUB_PASSWORD: ${{ secrets.PASSWORD }}
-        PRIVATE_DAY_INFO: $(cat sign_in_days.txt)
+        # PRIVATE_DAY_INFO: $(cat sign_in_days.txt)
     - name: 'Get Date'
       run: |
-        echo ${{env.PRIVATE_REPORT_DATE}}
-      env:
-        PRIVATE_REPORT_DATE: $(TZ=':Asia/Shanghai' date '+%Y-%m-%d %T')
+        echo $(TZ=':Asia/Shanghai' date '+%Y-%m-%d %T') >> PRIVATE_REPORT_DATE
+      # env:
+      #   PRIVATE_REPORT_DATE: $(TZ=':Asia/Shanghai' date '+%Y-%m-%d %T')
     - name: Send email
       uses: dawidd6/action-send-mail@master
       with:
@@ -51,11 +51,11 @@ jobs:
         username: ${{ secrets.MAIL_USERNAME }}
         password: ${{ secrets.EMAIL_PASSWORD }}
         subject: 签到小助手提醒您 ( ${{ env.PRIVATE_REPORT_DATE }} )      # only support text
-        body: ${{ $(cat sign_in_days.txt) }}                              # only support text
+        body: ${{ env.PRIVATE_DAY_INFO }}                              # only support text
         to: ${{ secrets.TEST_EMAIL }}
         from: GitHub Actions
         content_type: text/html
         attachments: /home/runner/paihang.png
-      # env:
-      #   PRIVATE_DAY_INFO: $(cat sign_in_days.txt)
-      #   PRIVATE_REPORT_DATE: $(TZ=':Asia/Shanghai' date '+%Y-%m-%d %T')
+      env:
+        PRIVATE_DAY_INFO: $(cat sign_in_days.txt)
+        PRIVATE_REPORT_DATE: $(TZ=':Asia/Shanghai' date '+%Y-%m-%d %T')
