@@ -51,7 +51,7 @@ jobs:
         username: ${{ secrets.MAIL_USERNAME }}
         password: ${{ secrets.EMAIL_PASSWORD }}
         subject: 签到小助手提醒您 ( ${{ env.PRIVATE_REPORT_DATE }} )
-        body: ${{ env.PRIVATE_DAY_INFO }}
+        body: ${ $(cat sign_in_days.txt) }
         to: ${{ secrets.TEST_EMAIL }}
         from: GitHub Actions
         content_type: text/html
