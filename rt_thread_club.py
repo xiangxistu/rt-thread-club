@@ -33,11 +33,14 @@ def login_in_club(user_name, pass_word):
             element.send_keys(pass_word)
             driver.find_element_by_id('login').click()
             logging.info("sign in times: {0}" .format(login_tick))
-            time.sleep(5)
+            time.sleep(3)
             if login_tick > 10:
                 break
             else:
                 login_tick += 1
+
+        while driver.current_url != club_url:
+            time.sleep(5)
 
         logging.info("sign in success!")
         if driver.current_url == "https://club.rt-thread.org/":
