@@ -38,13 +38,13 @@ jobs:
       env:
         CLUB_USERNAME: ${{ secrets.USERNAME }}
         CLUB_PASSWORD: ${{ secrets.PASSWORD }}
-        PRIVATE_DAY_INFO: ${cat sign_in_days.txt}
+        PRIVATE_DAY_INFO: $(cat sign_in_days.txt)
     - name: 'Get Date'
       run: |
         # echo "::set-env name=REPORT_DATE::$(TZ=':Asia/Shanghai' date '+%Y-%m-%d %T')"
         echo ${{env.PRIVATE_REPORT_DATE}}
       env:
-        PRIVATE_REPORT_DATE: ${(TZ=':Asia/Shanghai' date '+%Y-%m-%d %T')}
+        PRIVATE_REPORT_DATE: $(TZ=':Asia/Shanghai' date '+%Y-%m-%d %T')
     - name: Send email
       uses: dawidd6/action-send-mail@master
       with:
