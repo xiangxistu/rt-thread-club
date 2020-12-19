@@ -10,6 +10,7 @@ INLAND_URL = "https://www.rt-thread.org/account/user/index.html?response_type=co
 
 # URL_LIST = [FOREIGN_URL, INLAND_URL]
 URL_LIST = [INLAND_URL]
+LOGIN_LIST = ["https://club.rt-thread.org/", "https://club.rt-thread.io/"]
 day_info = ""
 
 def login_in_club(user_name, pass_word):
@@ -39,7 +40,11 @@ def login_in_club(user_name, pass_word):
             else:
                 login_tick += 1
 
-        while driver.current_url != club_url:
+        login_url = LOGIN_LIST[0]
+        while driver.current_url != login_url:
+            for login_url in LOGIN_LIST:
+                if driver.current_url == login_url:
+                    break
             time.sleep(5)
 
         logging.info("sign in success!")
