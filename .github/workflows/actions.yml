@@ -38,7 +38,8 @@ jobs:
         CLUB_USERNAME: ${{ secrets.USERNAME }}
         CLUB_PASSWORD: ${{ secrets.PASSWORD }}
     - name: 'Get Date'
-      # run: echo "::set-env name=REPORT_DATE::$(TZ=':Asia/Shanghai' date '+%Y-%m-%d %T')"
+      run: |
+        # echo "::set-env name=REPORT_DATE::$(TZ=':Asia/Shanghai' date '+%Y-%m-%d %T')"
         echo "TZ=':Asia/Shanghai' date '+%Y-%m-%d %T"
     - name: Send email
       uses: dawidd6/action-send-mail@master
