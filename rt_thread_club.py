@@ -10,6 +10,7 @@ INLAND_URL = "https://www.rt-thread.org/account/user/index.html?response_type=co
 
 # URL_LIST = [FOREIGN_URL, INLAND_URL]
 URL_LIST = [INLAND_URL]
+day_info = None
 
 def login_in_club(user_name, pass_word):
     option = webdriver.ChromeOptions()
@@ -60,7 +61,6 @@ def login_in_club(user_name, pass_word):
 
         time.sleep(1)
 
-        day_info = None
         # check sign in days
         try:
             element = driver.find_element_by_xpath("/html[1]/body[1]/div[2]/div[2]/div[2]/div[1]/div[1]/div[2]/a[1]")
