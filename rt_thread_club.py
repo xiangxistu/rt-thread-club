@@ -10,7 +10,7 @@ INLAND_URL = "https://www.rt-thread.org/account/user/index.html?response_type=co
 
 # URL_LIST = [FOREIGN_URL, INLAND_URL]
 URL_LIST = [INLAND_URL]
-day_info = None
+day_info = ""
 
 def login_in_club(user_name, pass_word):
     option = webdriver.ChromeOptions()
@@ -67,6 +67,7 @@ def login_in_club(user_name, pass_word):
         except Exception as e:
             logging.error("Error message : {0}".format(e))
         else:
+            global day_info
             day_info = element.text
             if club_url.find("https://club.rt-thread.org/") != -1:
                 logging.info("国内论坛: {0}".format(day_info))
