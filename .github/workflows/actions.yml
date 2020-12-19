@@ -45,13 +45,13 @@ jobs:
     - name: 'Get Date'
       run: |
         echo $(TZ=':Asia/Shanghai' date '+%Y-%m-%d %T') > date_info
-        echo cat date_info
+        cat date_info
         echo "command"
         echo $(TZ=':Asia/Shanghai' date '+%Y-%m-%d %T')
         echo "value"
         echo ${{ env.PRIVATE_REPORT_DATE}}
       env:
-        PRIVATE_REPORT_DATE: date_info
+        PRIVATE_REPORT_DATE: ${date_info}
     - name: Send email
       uses: dawidd6/action-send-mail@master
       with:
