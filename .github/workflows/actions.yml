@@ -38,6 +38,7 @@ jobs:
       env:
         CLUB_USERNAME: ${{ secrets.USERNAME }}
         CLUB_PASSWORD: ${{ secrets.PASSWORD }}
+        PRIVATE_DAY_INFO: $(cat sign_in_days.txt)
     - name: 'Get Date'
       run: |
         # echo "::set-env name=REPORT_DATE::$(TZ=':Asia/Shanghai' date '+%Y-%m-%d %T')"
@@ -49,8 +50,8 @@ jobs:
         server_port: 465
         username: ${{ secrets.MAIL_USERNAME }}
         password: ${{ secrets.EMAIL_PASSWORD }}
-        subject: 签到小助手提醒您 (${{env.PRIVATE_REPORT_DATE}})
-        body: /sign_in_days.txt
+        subject: 签到小助手提醒您 ( ${{ env.PRIVATE_REPORT_DATE }} )
+        body: ${{ env.PRIVATE_DAY_INFO }}
         to: ${{ secrets.TEST_EMAIL }}
         from: GitHub Actions
         content_type: text/html

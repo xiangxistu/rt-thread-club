@@ -22,7 +22,7 @@ def login_in_club(user_name, pass_word):
 
     # login in
     for club_url in URL_LIST:
-        print("URL : {0}".format(club_url))
+        logging.info("URL : {0}".format(club_url))
         driver.get(club_url)
         time.sleep(1)
         login_tick = 1;
@@ -62,6 +62,7 @@ def login_in_club(user_name, pass_word):
         time.sleep(1)
 
         # check sign in days
+        logging.info("get check information.")
         try:
             element = driver.find_element_by_xpath("/html[1]/body[1]/div[2]/div[2]/div[2]/div[1]/div[1]/div[2]/a[1]")
         except Exception as e:
@@ -76,6 +77,7 @@ def login_in_club(user_name, pass_word):
             else:
                 continue
 
+        logging.info("get ranking list for check in.")
         driver.find_element_by_link_text(u'排行榜').click()
         time.sleep(5)
         driver.get_screenshot_as_file("/home/runner/paihang.png")
