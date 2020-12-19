@@ -23,13 +23,22 @@ def login_in_club(user_name, pass_word):
     for club_url in URL_LIST:
         print("URL : {0}".format(club_url))
         driver.get(club_url)
-        element = driver.find_element_by_id("username")
-        element.send_keys(user_name)    
-        element = driver.find_element_by_id('password')
-        element.send_keys(pass_word)
-        driver.find_element_by_id('login').click()
-        time.sleep(10)
+        time.sleep(1)
+        login_tick = 1;
+        while driver.current_url == club_url:
+            element = driver.find_element_by_id("username")
+            element.send_keys(user_name)
+            element = driver.find_element_by_id('password')
+            element.send_keys(pass_word)
+            driver.find_element_by_id('login').click()
+            logging.info("sign in times: {0}" .format(login_tick))
+            time.sleep(5)
+            if login_tick > 10:
+                break
+            else:
+                login_tick += 1
 
+        logging.info("sign in success!")
         if driver.current_url == "https://club.rt-thread.org/":
             try:
                 element = driver.find_element_by_link_text(u"立即签到")
@@ -37,35 +46,37 @@ def login_in_club(user_name, pass_word):
                 logging.error("Error message : {0}".format(e))
             else:
                 element.click()
-                logging.info("sign in success!")
+                logging.info("check in success!")
         elif driver.current_url == "https://club.rt-thread.io/":
-            try:  
+            try:
                 element = driver.find_element_by_link_text(u"Check in Now")
             except Exception as e:
                 logging.error("Error message : {0}".format(e))
             else:
                 element.click()
-                logging.info("sign in success!")
+                logging.info("check in success!")
         else:
-            logging.error("username or password error, please check it, login in failed! {0}".format(driver.current_url));
             continue
 
         time.sleep(1)
 
-        day_num = None
+        day_info = None
         # check sign in days
         try:
             element = driver.find_element_by_xpath("/html[1]/body[1]/div[2]/div[2]/div[2]/div[1]/div[1]/div[2]/a[1]")
         except Exception as e:
             logging.error("Error message : {0}".format(e))
         else:
-            day_num = element.text
+            day_info = element.text
             if club_url.find("https://club.rt-thread.org/") != -1:
-                logging.info("国内论坛: {0}".format(day_num))
+                logging.info("国内论坛: {0}".format(day_info))
             elif club_url.find("https://club.rt-thread.io/") != -1:
-                logging.info("国外论坛: {0}".format(day_num))
+                logging.info("国外论坛: {0}".format(day_info))
             else:
-                logging.error("username or password error, please check it, login in failed! {0}".format(driver.current_url));
                 continue
-    
-    return 0;
+
+        driver.find_element_by_link_text(u'排行榜').click()
+        time.sleep(5)
+        driver.get_screenshot_as_file("/home/runner/paihang.png")
+
+    return day_info;
