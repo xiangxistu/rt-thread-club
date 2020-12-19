@@ -44,6 +44,7 @@ jobs:
         # PRIVATE_DAY_INFO: $(cat sign_in_days.txt)
     - name: 'Get Date'
       run: |
+        date_info = ""
         date_info = $(TZ=':Asia/Shanghai' date '+%Y-%m-%d %T')
         echo "command"
         echo $(TZ=':Asia/Shanghai' date '+%Y-%m-%d %T')
