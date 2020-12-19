@@ -44,8 +44,7 @@ jobs:
         # PRIVATE_DAY_INFO: $(cat sign_in_days.txt)
     - name: 'Get Date'
       run: |
-        date_info = ""
-        date_info = $(TZ=':Asia/Shanghai' date '+%Y-%m-%d %T')
+        $(TZ=':Asia/Shanghai' date '+%Y-%m-%d %T') > date_info
         echo "command"
         echo $(TZ=':Asia/Shanghai' date '+%Y-%m-%d %T')
         echo "value"
@@ -59,8 +58,8 @@ jobs:
         server_port: 465
         username: ${{ secrets.MAIL_USERNAME }}
         password: ${{ secrets.EMAIL_PASSWORD }}
-        subject: 签到小助手提醒您 ( ${{ env.PRIVATE_REPORT_DATE }} )      # only support text
-        body: ${{ env.PRIVATE_DAY_INFO  }} ,xiangxistu                   # only support text
+        subject: 签到成功 ${{ env.PRIVATE_REPORT_DATE }}      # only support text
+        body: ${{ env.PRIVATE_DAY_INFO  }} -xiangxistu        # only support text
         to: ${{ secrets.TEST_EMAIL }}
         from: GitHub Actions
         content_type: text/html
