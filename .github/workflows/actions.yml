@@ -34,14 +34,15 @@ jobs:
       run: |
         python actions.py
         # echo "::set-env name=CLUB_DAY_INFO::$(cat sign_in_days.txt)"
+        echo ${{env.PRIVATE_REPORT_DATE}}
       env:
         CLUB_USERNAME: ${{ secrets.USERNAME }}
         CLUB_PASSWORD: ${{ secrets.PASSWORD }}
-        CLUB_DAY_INFO: ${cat sign_in_days.txt}
+        PRIVATE_DAY_INFO: ${cat sign_in_days.txt}
     - name: 'Get Date'
       run: |
         # echo "::set-env name=REPORT_DATE::$(TZ=':Asia/Shanghai' date '+%Y-%m-%d %T')"
-        echo PRIVATE_REPORT_DATE
+        echo ${{env.PRIVATE_REPORT_DATE}}
       env:
         PRIVATE_REPORT_DATE: ${(TZ=':Asia/Shanghai' date '+%Y-%m-%d %T')}
     - name: Send email
@@ -52,7 +53,7 @@ jobs:
         username: ${{ secrets.MAIL_USERNAME }}
         password: ${{ secrets.EMAIL_PASSWORD }}
         subject: 签到小助手提醒您 (${{env.PRIVATE_REPORT_DATE}})
-        body: ${{env.CLUB_DAY_INFO}}
+        body: /sign_in_days.txt
         to: ${{ secrets.TEST_EMAIL }}
         from: GitHub Actions
         content_type: text/html
