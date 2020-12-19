@@ -47,7 +47,7 @@ def login_in_club(user_name, pass_word):
                 if driver.current_url == login_url:
                     break
             time.sleep(1)
-            logging.info("waitting chrome browser, {0} second!", login_tick)
+            logging.info("waitting chrome browser, {0} second!".format(login_tick))
             login_tick += 1
 
         logging.info("sign in success!")
