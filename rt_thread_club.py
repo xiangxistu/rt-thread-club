@@ -41,11 +41,14 @@ def login_in_club(user_name, pass_word):
                 login_tick += 1
 
         login_url = LOGIN_LIST[0]
+        login_tick = 1
         while driver.current_url != login_url:
             for login_url in LOGIN_LIST:
                 if driver.current_url == login_url:
                     break
-            time.sleep(5)
+            time.sleep(1)
+            logging.info("waitting chrome browser, {0} second!", login_tick)
+            login_tick += 1
 
         logging.info("sign in success!")
         if driver.current_url == "https://club.rt-thread.org/":
