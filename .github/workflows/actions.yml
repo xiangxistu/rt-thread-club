@@ -58,12 +58,9 @@ jobs:
         server_port: 465
         username: ${{ secrets.MAIL_USERNAME }}
         password: ${{ secrets.EMAIL_PASSWORD }}
-        subject: 签到小助手提醒您 ( ${{ PRIVATE_REPORT_DATE }} )      # only support text
-        body: ${{ PRIVATE_DAY_INFO }}                              # only support text
+        subject: 签到小助手提醒您 ( ${{ env.PRIVATE_REPORT_DATE }} )      # only support text
+        body: ${{ env.PRIVATE_DAY_INFO  }} ,xiangxistu                   # only support text
         to: ${{ secrets.TEST_EMAIL }}
         from: GitHub Actions
         content_type: text/html
         attachments: /home/runner/paihang.png
-      env:
-        PRIVATE_DAY_INFO: env.PRIVATE_DAY_INFO
-        PRIVATE_REPORT_DATE: env.PRIVATE_REPORT_DATE
