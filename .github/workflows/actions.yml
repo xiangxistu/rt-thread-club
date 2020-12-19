@@ -50,8 +50,8 @@ jobs:
         server_port: 465
         username: ${{ secrets.MAIL_USERNAME }}
         password: ${{ secrets.EMAIL_PASSWORD }}
-        subject: 签到小助手提醒您 ( ${{ env.PRIVATE_REPORT_DATE }} )
-        body: ${ $(cat sign_in_days.txt) }
+        subject: 签到小助手提醒您 ( ${{ env.PRIVATE_REPORT_DATE }} )      # only support text
+        body: ${{ $(cat sign_in_days.txt) }}                              # only support text
         to: ${{ secrets.TEST_EMAIL }}
         from: GitHub Actions
         content_type: text/html
