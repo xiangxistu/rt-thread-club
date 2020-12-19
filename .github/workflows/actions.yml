@@ -44,13 +44,12 @@ jobs:
         # PRIVATE_DAY_INFO: $(cat sign_in_days.txt)
     - name: 'Get Date'
       run: |
-        echo $(TZ=':Asia/Shanghai' date '+%Y-%m-%d %T') > env.PRIVATE_REPORT_DATE
         echo "command"
         echo $(TZ=':Asia/Shanghai' date '+%Y-%m-%d %T')
         echo "value"
         echo ${{ env.PRIVATE_REPORT_DATE}}
-      # env:
-      #   PRIVATE_REPORT_DATE: $(TZ=':Asia/Shanghai' date '+%Y-%m-%d %T')
+      env:
+        env.PRIVATE_REPORT_DATE: $(TZ=':Asia/Shanghai' date '+%Y-%m-%d %T')
     - name: Send email
       uses: dawidd6/action-send-mail@master
       with:
