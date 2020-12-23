@@ -42,25 +42,25 @@ jobs:
         CLUB_USERNAME: ${{ secrets.USERNAME }}
         CLUB_PASSWORD: ${{ secrets.PASSWORD }}
         # PRIVATE_DAY_INFO: $(cat sign_in_days.txt)
-    - name: 'Get Date'
-      run: |
-        echo $(TZ=':Asia/Shanghai' date '+%Y-%m-%d %T') > date_info
-        echo "command"
-        echo $(TZ=':Asia/Shanghai' date '+%Y-%m-%d %T')
-        echo "value"
-        echo ${{ env.PRIVATE_REPORT_DATE}}
-      env:
-        PRIVATE_REPORT_DATE: ${date_info}
-    - name: Send email
-      uses: dawidd6/action-send-mail@master
-      with:
-        server_address: smtp.qq.com
-        server_port: 465
-        username: ${{ secrets.MAIL_USERNAME }}
-        password: ${{ secrets.EMAIL_PASSWORD }}
-        subject: 签到成功 ${{ env.PRIVATE_REPORT_DATE }}      # only support text
-        body: ${{ env.PRIVATE_DAY_INFO  }} -xiangxistu        # only support text
-        to: ${{ secrets.TEST_EMAIL }}
-        from: GitHub Actions
-        content_type: text/html
-        attachments: /home/runner/paihang.png
+    # - name: 'Get Date'
+    #   run: |
+    #     echo $(TZ=':Asia/Shanghai' date '+%Y-%m-%d %T') > date_info
+    #     echo "command"
+    #     echo $(TZ=':Asia/Shanghai' date '+%Y-%m-%d %T')
+    #     echo "value"
+    #     echo ${{ env.PRIVATE_REPORT_DATE}}
+    #   env:
+    #     PRIVATE_REPORT_DATE: ${date_info}
+    # - name: Send email
+    #   uses: dawidd6/action-send-mail@master
+    #   with:
+    #     server_address: smtp.qq.com
+    #     server_port: 465
+    #     username: ${{ secrets.MAIL_USERNAME }}
+    #     password: ${{ secrets.EMAIL_PASSWORD }}
+    #     subject: 签到成功 ${{ env.PRIVATE_REPORT_DATE }}      # only support text
+    #     body: ${{ env.PRIVATE_DAY_INFO  }} -xiangxistu        # only support text
+    #     to: ${{ secrets.TEST_EMAIL }}
+    #     from: GitHub Actions
+    #     content_type: text/html
+    #     attachments: /home/runner/paihang.png
