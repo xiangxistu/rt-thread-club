@@ -5,7 +5,7 @@ name: rt-thread-club
 on:
   # Runs on the 0, 4, 8, 12, 16 and 20th hour every day
   schedule:
-    - cron:  '0 */4 * * *'
+    - cron:  '0 */6 * * *'
   push:
     branches:
       - master
