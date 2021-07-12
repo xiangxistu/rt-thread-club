@@ -27,7 +27,7 @@ def login_in_club(user_name, pass_word):
         driver.get(club_url)
         time.sleep(1)
         login_tick = 1;
-        success_flag = 0;
+        success_flag = False;
         while driver.current_url == club_url:
             element = driver.find_element_by_id("username")
             element.send_keys(user_name)
@@ -42,20 +42,22 @@ def login_in_club(user_name, pass_word):
             while driver.current_url != login_url:
                 for login_url in LOGIN_LIST:
                     if driver.current_url == login_url:
-                        success_flag = 1
+                        success_flag = True
                         break
                 time.sleep(1)
-                logging.info("waitting chrome browser, loggin tick{0} wait {0} second!".format(login_tick) .format(wait_tick))
+                logging.info("waitting chrome browser, Range {0}, wait {1} second!" .format(login_tick) .format(wait_tick))
                 if wait_tick > 5:
                     break
                 else:
                     wait_tick += 1
 
-            if success_flag == 1:
+            if success_flag == False:
                 break
             login_tick += 1
 
-        logging.info("sign in success!")
+        if success_flag == False:
+            assert success_flag == False, u"登录失败"
+        logging.info("[{0}], sign in success!" .format(success_flag))
         if driver.current_url == "https://club.rt-thread.org/":
             try:
                 element = driver.find_element_by_link_text(u"立即签到")
