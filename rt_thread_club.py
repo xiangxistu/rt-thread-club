@@ -46,12 +46,12 @@ def login_in_club(user_name, pass_word):
                         break
                 time.sleep(1)
                 logging.info("waitting chrome browser, Range {0}, wait {1} second!" .format(login_tick, wait_tick))
-                if wait_tick > 5:
+                if wait_tick >= 5:
                     break
                 else:
                     wait_tick += 1
 
-            if success_flag == False:
+            if success_flag == True:
                 break
             login_tick += 1
 
