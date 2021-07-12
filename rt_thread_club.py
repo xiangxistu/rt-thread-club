@@ -27,6 +27,7 @@ def login_in_club(user_name, pass_word):
         driver.get(club_url)
         time.sleep(1)
         login_tick = 1;
+        success_flag = 0;
         while driver.current_url == club_url:
             element = driver.find_element_by_id("username")
             element.send_keys(user_name)
@@ -35,19 +36,23 @@ def login_in_club(user_name, pass_word):
             driver.find_element_by_id('login').click()
             logging.info("sign in times: {0}" .format(login_tick))
             time.sleep(3)
-            if login_tick > 10:
-                break
-            else:
-                login_tick += 1
 
-        login_url = LOGIN_LIST[0]
-        login_tick = 1
-        while driver.current_url != login_url:
-            for login_url in LOGIN_LIST:
-                if driver.current_url == login_url:
+            login_url = LOGIN_LIST[0]
+            wait_tick = 0;
+            while driver.current_url != login_url:
+                for login_url in LOGIN_LIST:
+                    if driver.current_url == login_url:
+                        success_flag = 1
+                        break
+                time.sleep(1)
+                logging.info("waitting chrome browser, loggin tick{0} wait {0} second!".format(login_tick) .format(wait_tick))
+                if wait_tick > 5:
                     break
-            time.sleep(1)
-            logging.info("waitting chrome browser, {0} second!".format(login_tick))
+                else:
+                    wait_tick += 1
+
+            if success_flag == 1:
+                break
             login_tick += 1
 
         logging.info("sign in success!")
