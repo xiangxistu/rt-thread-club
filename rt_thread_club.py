@@ -48,9 +48,9 @@ def login_in_club(user_name, pass_word):
                     if driver.current_url == login_url:
                         success_flag = True
                         break
+                    logging.info("Real_URL: {0}, Want_URL:{1}" .format(driver.current_url, login_url))
                 time.sleep(1)
                 logging.info("Range {0}, wait {1} second!" .format(login_tick, wait_tick))
-                logging.info("Real_URL: {0}, Want_URL:{1}" .format(driver.current_url, login_url))
                 if wait_tick >= 5:
                     break
                 else:
@@ -62,6 +62,8 @@ def login_in_club(user_name, pass_word):
 
         if success_flag is False:
             assert success_flag == False, 'u"登录失败"'
+
+        assert success_flag == True, 'u"登录成功"'
 
         logging.info("[{0}], sign in success, URL index : {2}, URL: {1}" .format(success_flag, driver.current_url, login_list_index))
 
