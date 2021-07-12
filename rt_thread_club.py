@@ -60,12 +60,9 @@ def login_in_club(user_name, pass_word):
                 break
             login_tick += 1
 
-        if success_flag is False:
-            assert success_flag == False, 'u"登录失败"'
+        assert success_flag == False, 'u"登录失败"'
 
-        assert success_flag == True, 'u"登录成功"'
-
-        logging.info("[{0}], sign in success, URL index : {2}, URL: {1}" .format(success_flag, driver.current_url, login_list_index))
+        logging.info("Sign in success, URL index : {1}, URL: {0}" .format(driver.current_url, login_list_index))
 
         if driver.current_url == LOGIN_LIST[login_list_index - 1] :
             try:
