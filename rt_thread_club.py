@@ -11,7 +11,7 @@ INLAND_URL = "https://www.rt-thread.org/account/user/index.html?response_type=co
 # URL_LIST = [FOREIGN_URL, INLAND_URL]
 URL_LIST = [INLAND_URL]
 # "https://club.rt-thread.org/index.html"
-LOGIN_LIST = ["https://club.rt-thread.org/", "https://club.rt-thread.io/"]
+LOGIN_LIST = ["https://club.rt-thread.org/", "https://club.rt-thread.io/", "https://club.rt-thread.org/index.html"]
 day_info = ""
 
 def login_in_club(user_name, pass_word):
@@ -39,18 +39,19 @@ def login_in_club(user_name, pass_word):
             driver.find_element_by_id('login').click()
             logging.info("sign in times: {0}" .format(login_tick))
 
-            # login_list_index = 0
             login_url = LOGIN_LIST[0]
-            wait_tick = 1;
+            wait_tick = 0;
             while driver.current_url != login_url:
+                login_list_index = 0
                 for login_url in LOGIN_LIST:
-                    # login_list_index += 1
+                    login_list_index += 1
                     if driver.current_url == login_url:
                         success_flag = True
                         break
                 time.sleep(1)
-                logging.info("URL: {2}, Range {0}, wait {1} second!" .format(login_tick, wait_tick, driver.current_url))
-                if wait_tick > 5:
+                logging.info("Range {0}, wait {1} second!" .format(login_tick, wait_tick))
+                logging.info("Real_URL: {0}, Want_URL:{1}" .format(driver.current_url, login_url))
+                if wait_tick >= 5:
                     break
                 else:
                     wait_tick += 1
@@ -61,9 +62,10 @@ def login_in_club(user_name, pass_word):
 
         if success_flag is False:
             assert success_flag == False, 'u"登录失败"'
-        logging.info("[{0}], sign in success, URL: {1}" .format(success_flag, driver.current_url))
 
-        if driver.current_url == LOGIN_LIST[0] :
+        logging.info("[{0}], sign in success, URL index : {2}, URL: {1}" .format(success_flag, driver.current_url, login_list_index))
+
+        if driver.current_url == LOGIN_LIST[login_list_index - 1] :
             try:
                 element = driver.find_element_by_link_text(u"立即签到")
             except Exception as e:
