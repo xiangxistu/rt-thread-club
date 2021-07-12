@@ -10,7 +10,7 @@ INLAND_URL = "https://www.rt-thread.org/account/user/index.html?response_type=co
 
 # URL_LIST = [FOREIGN_URL, INLAND_URL]
 URL_LIST = [INLAND_URL]
-LOGIN_LIST = ["https://club.rt-thread.org/", "https://club.rt-thread.io/"]
+LOGIN_LIST = ["https://club.rt-thread.org/", "https://club.rt-thread.io/", "https://club.rt-thread.org/index.html"]
 day_info = ""
 
 def login_in_club(user_name, pass_word):
@@ -28,6 +28,8 @@ def login_in_club(user_name, pass_word):
         time.sleep(1)
         login_tick = 1;
         success_flag = False;
+        login_list_index = 0;
+
         while driver.current_url == club_url:
             element = driver.find_element_by_id("username")
             element.send_keys(user_name)
@@ -37,28 +39,31 @@ def login_in_club(user_name, pass_word):
             logging.info("sign in times: {0}" .format(login_tick))
             time.sleep(3)
 
+            login_list_index = 0
             login_url = LOGIN_LIST[0]
             wait_tick = 0;
             while driver.current_url != login_url:
                 for login_url in LOGIN_LIST:
+                    login_list_index += 1
                     if driver.current_url == login_url:
                         success_flag = True
                         break
-                time.sleep(1)
-                logging.info("waitting chrome browser, Range {0}, wait {1} second!" .format(login_tick, wait_tick))
-                if wait_tick >= 5:
-                    break
-                else:
-                    wait_tick += 1
-
-            if success_flag == True:
+            time.sleep(1)
+            logging.info("URL: {2}, Range {0}, wait {1} second!" .format(login_tick, wait_tick, driver.current_url))
+            if wait_tick >= 5:
                 break
-            login_tick += 1
+            else:
+                wait_tick += 1
 
-        if success_flag == False:
-            assert success_flag == False, u"登录失败"
-        logging.info("[{0}], sign in success!" .format(success_flag))
-        if driver.current_url == "https://club.rt-thread.org/":
+        if success_flag is True:
+            break
+        login_tick += 1
+
+        if success_flag is False:
+            assert success_flag == False, 'u"登录失败"'
+        logging.info("[{0}], sign in success, URL: {1}" .format(success_flag), driver.current_url)
+
+        if driver.current_url == LOGIN_LIST[login_list_index] :
             try:
                 element = driver.find_element_by_link_text(u"立即签到")
             except Exception as e:
